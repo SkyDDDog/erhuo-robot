@@ -1,30 +1,58 @@
 package com.lyd.listener;
 
-import lombok.extern.slf4j.Slf4j;
+import love.forte.simboot.annotation.Filter;
 import love.forte.simboot.annotation.Listener;
+import love.forte.simbot.Bot;
+import love.forte.simbot.Identifies;
+import love.forte.simbot.action.ReplySupport;
+import love.forte.simbot.component.mirai.extra.catcode.CatCodeMessageUtil;
+import love.forte.simbot.event.FriendMessageEvent;
 import love.forte.simbot.event.GroupMessageEvent;
-import org.apache.juli.logging.Log;
+import love.forte.simbot.message.*;
+import love.forte.simbot.resources.PathResource;
+import love.forte.simbot.resources.Resource;
 import org.springframework.stereotype.Component;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 
-@Slf4j
 @Component
 public class GroupListener {
 
-    /**
-     * 复读群成员消息 你说什么我复读什么
-     * @param event 群事件
-     */
     @Listener
-    public void repeat(GroupMessageEvent event){
-
-        // 获取群成员的消息
-        // getPlainText()为文本消息
-        final String message = event.getMessageContent().getPlainText();
-        log.info(message);
-
-        //发送消息
+    @Filter(".help")
+    public void help(GroupMessageEvent event) {
+        String msg = "help消息还没做\n但是你可以v我50";
+        String img = "[CAT:image,url=https://gitee.com/sky-dog/note/raw/master/img/202208300051841.png,flash=false]";
+        Message message = CatCodeMessageUtil.catCodeToMessage(img);
         event.getGroup().sendBlocking(message);
+    }
 
+    @Listener
+    @Filter(".help")
+    public void help(FriendMessageEvent event) {
+        String msg = "help消息还没做\n但是你可以v我50";
+        String img = "[CAT:image,url=https://gitee.com/sky-dog/note/raw/master/img/202208300051841.png,flash=false]";
+        Message message = CatCodeMessageUtil.catCodeToMessage(img);
+        List<Message.Element<?>> messageList = new ArrayList<>(2);
+        messageList.add(Text.of("simbot"));
+        messageList.add((Message.Element<?>) CatCodeMessageUtil.catCodeToMessage(img));
+
+
+//        Path path = Paths.get("imgs/vme50.jpg");
+//        PathResource imgResource = Resource.of(path);
+//        Bot bot = event.getBot();
+//        Image<?> image = bot.uploadImageBlocking(imgResource);
+        for (Message.Element<?> element : messageList) {
+            event.getFriend().sendBlocking(element);
+        }
+
+
+
+//        if (event instanceof ReplySupport) {
+//            ((ReplySupport) event).replyBlocking(message);
+//        }
     }
 
 }

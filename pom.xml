@@ -60,6 +60,18 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!--Spring单元测试-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>love.forte.simbot.component</groupId>
+            <artifactId>simbot-component-mirai-extra-catcode</artifactId>
+            <version>3.0.0.0.preview.13.0</version>
+        </dependency>
 
     </dependencies>
 
