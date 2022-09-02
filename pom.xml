@@ -3,87 +3,74 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
     <groupId>org.example</groupId>
     <artifactId>huo-robot</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <!-- 其他内容省略.. -->
+
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <spring-framework.version>5.3.16</spring-framework.version>
-        <java.version>8</java.version>
-        <simbot.version>3.0.0.preview.8.1</simbot.version>
-        <simbot-component-tcg.version>3.0.0.0.preview.3.1</simbot-component-tcg.version>
-        <simbot-component-mirai.version>3.0.0.0.preview.2.2</simbot-component-mirai.version>
+        <!-- 此版本很有可能滞后，请前往github或者上述链接查看最新版本. -->
+        <simbot.version>2.4.0</simbot.version>
     </properties>
 
-    <!-- Spring Boot 相关。此处选择使用parent对Spring进行版本控制 -->
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <!-- Spring Boot 版本 -->
-        <version>2.6.6</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
 
     <dependencies>
-        <!-- 引入你所需要的Spring Boot依赖。这里假设你需要使用 web 相关功能 -->
+        <!-- 举例: 使用mirai组件开发QQ机器人。 -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <!-- simbot-spring-boot-starter 库 -->
-        <dependency>
-            <groupId>love.forte.simbot.boot</groupId>
-            <artifactId>simboot-core-spring-boot-starter</artifactId>
+            <groupId>love.forte.simple-robot</groupId>
+            <artifactId>component-mirai</artifactId>
             <version>${simbot.version}</version>
         </dependency>
-
-        <!-- 腾讯频道组件 -->
-        <dependency>
-            <groupId>love.forte.simbot.component</groupId>
-            <artifactId>simbot-component-tencent-guild-boot</artifactId>
-            <version>${simbot-component-tcg.version}</version>
-        </dependency>
-
-        <!-- mirai组件 -->
-        <dependency>
-            <groupId>love.forte.simbot.component</groupId>
-            <artifactId>simbot-component-mirai-boot</artifactId>
-            <version>${simbot-component-mirai.version}</version>
-        </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <version>1.18.24</version>
         </dependency>
-
-        <!--Spring单元测试-->
+        <!-- 定时任务模块-quartz实现 -->
+        <!-- https://mvnrepository.com/artifact/love.forte.simple-robot.time-task/time-task-quartz -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>love.forte.simbot.component</groupId>
-            <artifactId>simbot-component-mirai-extra-catcode</artifactId>
-            <version>3.0.0.0.preview.13.0</version>
+            <groupId>love.forte.simple-robot.time-task</groupId>
+            <artifactId>time-task-quartz</artifactId>
+            <version>2.4.0</version>
         </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
+            <!-- 编译插件 plugin. -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                    <compilerArgs>
+                        <arg>-parameters</arg>
+                    </compilerArgs>
+                </configuration>
+            </plugin>
+
+            <!-- 打包插件 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>2.3.4.RELEASE</version>
+                <configuration>
+                    <mainClass>test.Test</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
 
-
+    <!-- 其他内容省略.. -->
 
 </project>

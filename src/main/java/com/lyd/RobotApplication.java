@@ -1,15 +1,15 @@
 package com.lyd;
 
-import love.forte.simboot.autoconfigure.EnableSimbot;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@EnableSimbot
-@SpringBootApplication
+import love.forte.simbot.annotation.SimbotApplication;
+import love.forte.simbot.core.SimbotApp;
+import love.forte.simbot.core.SimbotContext;
+
+@SimbotApplication
 public class RobotApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(RobotApplication.class,args);
+        final SimbotContext context = SimbotApp.run(RobotApplication.class, args);
     }
 
 }
